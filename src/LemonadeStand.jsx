@@ -1,31 +1,26 @@
-import React, { Component } from 'react';
+import { useSelector, useDispatch } from "react-redux";
+import { buyLemon, sellLemonade } from "./store";
 
-class LemonadeStand extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      profit: 0,
-    };
-  }
+export default function LemonadeStand() {
+  const cash = useSelector((state) => state.lemonade.cash);
+  const dispatch = useDispatch();
 
-  sellLemonade = () => {
-    this.setState({ profit: this.state.profit + 5 });
-  };
-
-  buyLemons = () => {
-    this.setState({ profit: this.state.profit - 2 });
-  };
-
-  render() {
-    return (
-      <div>
-        <h2>Lemonade Stand</h2>
-        <p>Profit: ${this.state.profit}</p>
-        <button onClick={this.sellLemonade}>Sælg Lemonade</button>
-        <button onClick={this.buyLemons}>Køb Citroner</button>
-      </div>
-    );
-  }
+  return (
+    <div className="flex flex-col items-center p-5 space-y-4">
+      <h1 className="text-2xl font-bold">Lemonadeboden</h1>
+      <p className="text-xl">Penge: ${cash}</p>
+      <button
+        className="px-4 py-2 bg-blue-500 text-white rounded"
+        onClick={() => dispatch(buyLemon())}
+      >
+        Køb Citroner (-$2)
+      </button>
+      <button
+        className="px-4 py-2 bg-green-500 text-white rounded"
+        onClick={() => dispatch(sellLemonade())}
+      >
+        Sælg Citroner (+$3)
+      </button>
+    </div>
+  );
 }
-
-export default LemonadeStand;
